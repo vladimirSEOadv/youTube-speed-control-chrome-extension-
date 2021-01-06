@@ -1,4 +1,7 @@
-var videoSpeed = document.getElementsByClassName("video-stream html5-main-video")[0].playbackRate;
+
+
+function mainfunc () {
+	var videoSpeed = document.getElementsByClassName("video-stream html5-main-video")[0].playbackRate;
 var counter = 0.25;
 
 var NewButton1 = document.createElement("button");
@@ -26,8 +29,9 @@ NewButton2.style.color = "white";
 NewButton2.textContent = "normal";
 NewButton2.classList.add('video-control2');
 NewButton2.addEventListener('click', function (event) {
-  document.getElementsByClassName("video-stream html5-main-video")[0].playbackRate = 1.0
-  videoSpeed = document.getElementsByClassName("video-stream html5-main-video")[0].playbackRate;;
+	document.getElementsByClassName("video-stream html5-main-video")[0].playbackRate = 1.0;
+	videoSpeed = document.getElementsByClassName("video-stream html5-main-video")[0].playbackRate;
+  	
 });
 
 document.getElementById(`flex`).appendChild(NewButton2);
@@ -46,3 +50,6 @@ NewButton3.addEventListener('click', function (event) {
 });
 
 document.getElementById(`flex`).appendChild(NewButton3);
+};
+
+setTimeout(mainfunc,3000);
