@@ -46,10 +46,6 @@ function mainfunc() {
 	const ButtonNormal = elementCreator("button", "black", "normal", "normal-button-for-yt-video");
 	const ButtonFast = elementCreator("button", "green", "fast", "fast-button-for-yt-video");
 
-	if (localStorage.getItem('youTubeVideoSpeed')) { // Иницилизация, чтение скорости из локального хранилища
-		videoSpeed = Number(localStorage.getItem('youTubeVideoSpeed'));
-		divSpeedCounter.innerHTML = videoSpeed;
-	};
 
 	function autoUpdateVideoSpeed() { // Автообновление скорости воспроизведения
 		if (document.querySelector('#movie_player').classList.contains('playing-mode') && document.querySelector('.video-stream.html5-main-video').playbackRate != videoSpeed) {
@@ -57,8 +53,7 @@ function mainfunc() {
 			divSpeedCounter.innerHTML = videoSpeed;
 			localStorage.setItem('youTubeVideoSpeed', videoSpeed);
 		}
-	}
-	setInterval(autoUpdateVideoSpeed, 5000)
+	};
+	setInterval(autoUpdateVideoSpeed, 5000);
 };
-// window.onload = mainfunc()
-setTimeout(mainfunc, 3000)
+setTimeout(mainfunc, 3000);
