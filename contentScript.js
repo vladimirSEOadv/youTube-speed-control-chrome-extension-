@@ -4,6 +4,8 @@ function mainfunc() {
 	let videoSpeed = localStorage.getItem('youTubeVideoSpeed') != null ? Number(localStorage.getItem('youTubeVideoSpeed')) : yPlayer.playbackRate;
 	const counter = 0.25;
 
+
+	// Создание элементов интерфейса
 	const divSpeedCounter = document.createElement("div");
 	divSpeedCounter.style.margin = "10px";
 	divSpeedCounter.style.height = "25px";
@@ -14,12 +16,13 @@ function mainfunc() {
 
 	document.getElementById(`flex`).appendChild(divSpeedCounter);
 
-	function elementCreator(elementType, backgroundColor, elemText, elemClass) {
+	function elementCreator(elementType, backgroundColor, elemText, elemClass) { //Конструктор кнопок
 		element = document.createElement(elementType);
 		element.classList.add(elemClass);
 		element.textContent = elemText;
 		element.style.backgroundColor = backgroundColor;
 		element.style.cssText += 'margin: 10px; height: 25px; width: 55px; color: white;';
+		document.getElementById(`flex`).appendChild(element)
 		return element
 	}
 
@@ -29,7 +32,7 @@ function mainfunc() {
 		changeVideoSpeed('down')
 	});
 
-	document.getElementById(`flex`).appendChild(ButtonSlow);
+	// document.getElementById(`flex`).appendChild(ButtonSlow);
 
 	const ButtonNormal = elementCreator("button", "black", "normal", "video-control2")
 
@@ -37,14 +40,13 @@ function mainfunc() {
 		changeVideoSpeed('normal');
 	});
 
-	document.getElementById(`flex`).appendChild(ButtonNormal);
+	// document.getElementById(`flex`).appendChild(ButtonNormal);
 
 	const ButtonFast = elementCreator("button", "green", "fast", "video-control3")
 
 	ButtonFast.addEventListener('click', function (event) {
 		changeVideoSpeed('up');
-	});
-	document.getElementById(`flex`).appendChild(ButtonFast);
+	})
 
 	if (localStorage.getItem('youTubeVideoSpeed')) { // Иницилизация, чтение скорости из локального хранилища
 		videoSpeed = Number(localStorage.getItem('youTubeVideoSpeed'));
