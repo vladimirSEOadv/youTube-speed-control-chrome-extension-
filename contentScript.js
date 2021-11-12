@@ -1,7 +1,7 @@
 function mainfunc() {
 	const yPlayer = document.querySelector('.video-stream.html5-main-video')
-	let videoSpeed = yPlayer.playbackRate;
-	// let videoSpeed = localStorage.getItem('youTubeVideoSpeed') === null ? yPlayer.playbackRate : localStorage.getItem('youTubeVideoSpeed');
+	// let videoSpeed = yPlayer.playbackRate;
+	let videoSpeed = localStorage.getItem('youTubeVideoSpeed') != null ? Number(localStorage.getItem('youTubeVideoSpeed')) : yPlayer.playbackRate;
 	const counter = 0.25;
 
 	const divSpeedCounter = document.createElement("div");
@@ -34,7 +34,7 @@ function mainfunc() {
 	const ButtonNormal = elementCreator("button", "black", "normal", "video-control2")
 
 	ButtonNormal.addEventListener('click', function (event) {
-		changeVideoSpeed('normal')
+		changeVideoSpeed('normal');
 	});
 
 	document.getElementById(`flex`).appendChild(ButtonNormal);
@@ -42,12 +42,12 @@ function mainfunc() {
 	const ButtonFast = elementCreator("button", "green", "fast", "video-control3")
 
 	ButtonFast.addEventListener('click', function (event) {
-		changeVideoSpeed('up')
+		changeVideoSpeed('up');
 	});
 	document.getElementById(`flex`).appendChild(ButtonFast);
 
 	if (localStorage.getItem('youTubeVideoSpeed')) { // Иницилизация, чтение скорости из локального хранилища
-		videoSpeed = localStorage.getItem('youTubeVideoSpeed')
+		videoSpeed = Number(localStorage.getItem('youTubeVideoSpeed'));
 		divSpeedCounter.innerHTML = videoSpeed;
 	};
 
