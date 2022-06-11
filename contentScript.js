@@ -107,6 +107,4 @@ function mainfunc() {
 	}
 };
 
-
-
 setTimeout(mainfunc, 5000);
