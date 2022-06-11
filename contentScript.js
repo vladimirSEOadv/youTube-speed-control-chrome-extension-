@@ -80,7 +80,7 @@ function mainfunc() {
 		"KeyW"
 	);
 	document.addEventListener('keydown', keyBordControl);
-	let statusKeyBordControl = false
+	let statusKeyBordControl = localStorage.getItem('statusKeyBordControl') != null ? localStorage.getItem('statusKeyBordControl') : false;
 
 	function keyBordControl(e) {
 		if (e.code == 'NumLock') {
@@ -104,6 +104,7 @@ function mainfunc() {
 			localStorage.setItem('youTubeVideoSpeed', videoSpeed);
 			divSpeedCounter.innerHTML = videoSpeed;
 		}
+		localStorage.setItem('statusKeyBordControl', statusKeyBordControl)
 	}
 };
 
