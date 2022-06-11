@@ -56,56 +56,33 @@ function mainfunc() {
 	};
 	setInterval(autoUpdateVideoSpeed, 5000);
 
-	function runOnKeys(func, ...codes) {
-		let pressed = new Set();
-		document.addEventListener('keydown', function (event) {
-			pressed.add(event.code);
-
-			for (let code of codes) {
-				if (!pressed.has(code)) {
-					return;
-				}
-			}
-			pressed.clear();
-			func();
-		});
-		document.addEventListener('keyup', function (event) {
-			pressed.delete(event.code);
-		});
-	}
-
-	runOnKeys(
-		() => alert("Привет!"),
-		"KeyQ",
-		"KeyW"
-	);
 	document.addEventListener('keydown', keyBordControl);
 	let statusKeyBordControl = localStorage.getItem('statusKeyBordControl') != null ? localStorage.getItem('statusKeyBordControl') : false;
 
 	function keyBordControl(e) {
 		if (e.code == 'NumLock') {
-			statusKeyBordControl = !statusKeyBordControl
-		}
+			statusKeyBordControl = !statusKeyBordControl;
+		};
 		if (e.code == 'KeyA' && statusKeyBordControl) {
 			videoSpeed = (videoSpeed - stepCounter);
 			yPlayer.playbackRate = videoSpeed;
 			localStorage.setItem('youTubeVideoSpeed', videoSpeed);
 			divSpeedCounter.innerHTML = videoSpeed;
-		}
+		};
 		if (e.code == 'KeyS' && statusKeyBordControl) {
 			videoSpeed = 1.0;
 			yPlayer.playbackRate = videoSpeed;
 			localStorage.setItem('youTubeVideoSpeed', videoSpeed);
 			divSpeedCounter.innerHTML = videoSpeed;
-		}
+		};
 		if (e.code == 'KeyD' && statusKeyBordControl) {
 			videoSpeed = (videoSpeed + stepCounter);
 			yPlayer.playbackRate = videoSpeed;
 			localStorage.setItem('youTubeVideoSpeed', videoSpeed);
 			divSpeedCounter.innerHTML = videoSpeed;
-		}
-		localStorage.setItem('statusKeyBordControl', statusKeyBordControl)
-	}
+		};
+		localStorage.setItem('statusKeyBordControl', statusKeyBordControl);
+	};
 };
 
 setTimeout(mainfunc, 5000);
