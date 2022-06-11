@@ -47,7 +47,6 @@ function mainfunc() {
 	const ButtonNormal = elementCreator('button', 'black', 'normal', 'normal-button-for-yt-video');
 	const ButtonFast = elementCreator('button', 'green', 'fast', 'fast-button-for-yt-video');
 
-
 	function autoUpdateVideoSpeed() { // Обновление скорости воспроизведения при запуске
 		if (document.querySelector('#movie_player').classList.contains('playing-mode') && document.querySelector('.video-stream.html5-main-video').playbackRate != videoSpeed) {
 			document.querySelector('.video-stream.html5-main-video').playbackRate = videoSpeed;
@@ -57,26 +56,55 @@ function mainfunc() {
 	};
 	setInterval(autoUpdateVideoSpeed, 5000);
 
-	document.addEventListener('keydown', function (event) {
-		if (event.code == 'KeyA') {
+	function runOnKeys(func, ...codes) {
+		let pressed = new Set();
+		document.addEventListener('keydown', function (event) {
+			pressed.add(event.code);
+
+			for (let code of codes) {
+				if (!pressed.has(code)) {
+					return;
+				}
+			}
+			pressed.clear();
+			func();
+		});
+		document.addEventListener('keyup', function (event) {
+			pressed.delete(event.code);
+		});
+	}
+
+	runOnKeys(
+		() => alert("Привет!"),
+		"KeyQ",
+		"KeyW"
+	);
+	document.addEventListener('keydown', keyBordControl);
+	let statusKeyBordControl = false
+
+	function keyBordControl(e) {
+		if (e.code == 'NumLock') {
+			statusKeyBordControl = !statusKeyBordControl
+		}
+		if (e.code == 'KeyA' && statusKeyBordControl) {
 			videoSpeed = (videoSpeed - stepCounter);
 			yPlayer.playbackRate = videoSpeed;
 			localStorage.setItem('youTubeVideoSpeed', videoSpeed);
 			divSpeedCounter.innerHTML = videoSpeed;
 		}
-		if (event.code == 'KeyS') {
+		if (e.code == 'KeyS' && statusKeyBordControl) {
 			videoSpeed = 1.0;
 			yPlayer.playbackRate = videoSpeed;
 			localStorage.setItem('youTubeVideoSpeed', videoSpeed);
 			divSpeedCounter.innerHTML = videoSpeed;
 		}
-		if (event.code == 'KeyD') {
+		if (e.code == 'KeyD' && statusKeyBordControl) {
 			videoSpeed = (videoSpeed + stepCounter);
 			yPlayer.playbackRate = videoSpeed;
 			localStorage.setItem('youTubeVideoSpeed', videoSpeed);
 			divSpeedCounter.innerHTML = videoSpeed;
 		}
-	});
+	}
 };
 
 
