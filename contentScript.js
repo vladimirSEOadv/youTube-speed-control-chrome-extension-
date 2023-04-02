@@ -1,3 +1,12 @@
+let checkExist = setInterval(function () {
+  const videoElement = document.getElementById("limited-state");
+  if (videoElement) {
+    clearInterval(checkExist);
+    // выполнить код, когда элемент будет доступен
+    mainfunc();
+  }
+}, 100);
+
 function mainfunc() {
   const yPlayer = document.querySelector(".video-stream.html5-main-video");
   let videoSpeed =
@@ -126,4 +135,4 @@ function mainfunc() {
 
 // document.addEventListener("DOMContentLoaded", mainfunc());
 
-setTimeout(mainfunc, 4000);
+// setTimeout(mainfunc, 4000);
