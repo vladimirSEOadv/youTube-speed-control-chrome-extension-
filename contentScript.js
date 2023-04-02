@@ -1,88 +1,129 @@
 function mainfunc() {
-	const yPlayer = document.querySelector('.video-stream.html5-main-video');
-	let videoSpeed = localStorage.getItem('youTubeVideoSpeed') != null ? Number(localStorage.getItem('youTubeVideoSpeed')) : yPlayer.playbackRate;
-	const stepCounter = 0.25;
+  const yPlayer = document.querySelector(".video-stream.html5-main-video");
+  let videoSpeed =
+    localStorage.getItem("youTubeVideoSpeed") != null
+      ? Number(localStorage.getItem("youTubeVideoSpeed"))
+      : yPlayer.playbackRate;
+  const stepCounter = 0.25;
 
-	// Создание элементов интерфейса
-	const divSpeedCounter = document.createElement('div');
-	divSpeedCounter.style.margin = '10px';
-	divSpeedCounter.style.height = '25px';
-	divSpeedCounter.style.width = '230px';
-	divSpeedCounter.style.fontSize = '30px';
-	divSpeedCounter.style.display = 'flex';
-	divSpeedCounter.style.justifyContent = 'center';
-	divSpeedCounter.textContent = document.getElementsByClassName('video-stream html5-main-video')[0].playbackRate;
-	divSpeedCounter.classList.add('video-counter');
+  const elementIdForInsert = "limited-state"; // Элемент для вставки
 
-	document.getElementById('flex').appendChild(divSpeedCounter);
+  // Создание элементов интерфейса
+  const divSpeedCounter = document.createElement("div");
+  divSpeedCounter.style.margin = "10px";
+  divSpeedCounter.style.height = "25px";
+  divSpeedCounter.style.width = "230px";
+  divSpeedCounter.style.fontSize = "30px";
+  divSpeedCounter.style.display = "flex";
+  divSpeedCounter.style.justifyContent = "center";
+  divSpeedCounter.textContent = document.getElementsByClassName(
+    "video-stream html5-main-video"
+  )[0].playbackRate;
+  divSpeedCounter.classList.add("video-counter");
 
-	function elementCreator(elementType, backgroundColor, elemText, elemId) { //Конструктор кнопок
-		element = document.createElement(elementType);
-		element.id = elemId;
-		element.textContent = elemText;
-		element.style.backgroundColor = backgroundColor;
-		element.style.cssText += 'margin: 10px; height: 25px; width: 55px; color: white;';
-		document.getElementById('flex').appendChild(element);
-		return element
-	}
+  document.getElementById(elementIdForInsert).appendChild(divSpeedCounter);
 
-	document.getElementById('flex').addEventListener('click', (event) => { // Обработчик событий кликов
-		switch (event.target.id) {
-			case 'fast-button-for-yt-video':
-				videoSpeed = (videoSpeed + stepCounter);
-				break
-			case 'normal-button-for-yt-video':
-				videoSpeed = 1.0;
-				break
-			case 'slow-button-for-yt-video':
-				videoSpeed = (videoSpeed - stepCounter);
-				break
-		};
-		yPlayer.playbackRate = videoSpeed;
-		localStorage.setItem('youTubeVideoSpeed', videoSpeed);
-		divSpeedCounter.innerHTML = videoSpeed;
-	});
+  //Конструктор кнопок
+  function elementCreator(elementType, backgroundColor, elemText, elemId) {
+    element = document.createElement(elementType);
+    element.id = elemId;
+    element.textContent = elemText;
+    element.style.backgroundColor = backgroundColor;
+    element.style.cssText +=
+      "margin: 10px; height: 25px; width: 55px; color: white;";
+    document.getElementById(elementIdForInsert).appendChild(element);
+    return element;
+  }
 
-	const ButtonSlow = elementCreator('button', 'red', 'slow', 'slow-button-for-yt-video');
-	const ButtonNormal = elementCreator('button', 'black', 'normal', 'normal-button-for-yt-video');
-	const ButtonFast = elementCreator('button', 'green', 'fast', 'fast-button-for-yt-video');
+  // Обработчик событий кликов
+  document
+    .getElementById(elementIdForInsert)
+    .addEventListener("click", (event) => {
+      switch (event.target.id) {
+        case "fast-button-for-yt-video":
+          videoSpeed = videoSpeed + stepCounter;
+          break;
+        case "normal-button-for-yt-video":
+          videoSpeed = 1.0;
+          break;
+        case "slow-button-for-yt-video":
+          videoSpeed = videoSpeed - stepCounter;
+          break;
+      }
+      yPlayer.playbackRate = videoSpeed;
+      localStorage.setItem("youTubeVideoSpeed", videoSpeed);
+      divSpeedCounter.innerHTML = videoSpeed;
+    });
 
-	function autoUpdateVideoSpeed() { // Обновление скорости воспроизведения при запуске
-		if (document.querySelector('#movie_player').classList.contains('playing-mode') && document.querySelector('.video-stream.html5-main-video').playbackRate != videoSpeed) {
-			document.querySelector('.video-stream.html5-main-video').playbackRate = videoSpeed;
-			divSpeedCounter.innerHTML = videoSpeed;
-			localStorage.setItem('youTubeVideoSpeed', videoSpeed);
-		}
-	};
-	setInterval(autoUpdateVideoSpeed, 5000);
+  const ButtonSlow = elementCreator(
+    "button",
+    "red",
+    "slow",
+    "slow-button-for-yt-video"
+  );
+  const ButtonNormal = elementCreator(
+    "button",
+    "black",
+    "normal",
+    "normal-button-for-yt-video"
+  );
+  const ButtonFast = elementCreator(
+    "button",
+    "green",
+    "fast",
+    "fast-button-for-yt-video"
+  );
 
-	document.addEventListener('keydown', keyBordControl);
-	let statusKeyBordControl = localStorage.getItem('statusKeyBordControl') != null ? localStorage.getItem('statusKeyBordControl') : false;
+  // Обновление скорости воспроизведения при запуске
+  function autoUpdateVideoSpeed() {
+    if (
+      document
+        .querySelector("#movie_player")
+        .classList.contains("playing-mode") &&
+      document.querySelector(".video-stream.html5-main-video").playbackRate !=
+        videoSpeed
+    ) {
+      document.querySelector(".video-stream.html5-main-video").playbackRate =
+        videoSpeed;
+      divSpeedCounter.innerHTML = videoSpeed;
+      localStorage.setItem("youTubeVideoSpeed", videoSpeed);
+    }
+  }
+  setInterval(autoUpdateVideoSpeed, 5000);
 
-	function keyBordControl(e) {
-		if (e.code == 'NumLock') {
-			statusKeyBordControl = !statusKeyBordControl;
-		};
-		if (e.code == 'KeyA' && statusKeyBordControl) {
-			videoSpeed = (videoSpeed - stepCounter);
-			yPlayer.playbackRate = videoSpeed;
-			localStorage.setItem('youTubeVideoSpeed', videoSpeed);
-			divSpeedCounter.innerHTML = videoSpeed;
-		};
-		if (e.code == 'KeyS' && statusKeyBordControl) {
-			videoSpeed = 1.0;
-			yPlayer.playbackRate = videoSpeed;
-			localStorage.setItem('youTubeVideoSpeed', videoSpeed);
-			divSpeedCounter.innerHTML = videoSpeed;
-		};
-		if (e.code == 'KeyD' && statusKeyBordControl) {
-			videoSpeed = (videoSpeed + stepCounter);
-			yPlayer.playbackRate = videoSpeed;
-			localStorage.setItem('youTubeVideoSpeed', videoSpeed);
-			divSpeedCounter.innerHTML = videoSpeed;
-		};
-		localStorage.setItem('statusKeyBordControl', statusKeyBordControl);
-	};
-};
+  // Упраление с клавиатуры
+  document.addEventListener("keydown", keyBordControl);
+  let statusKeyBordControl =
+    localStorage.getItem("statusKeyBordControl") != null
+      ? localStorage.getItem("statusKeyBordControl")
+      : false;
 
-setTimeout(mainfunc, 5000);
+  function keyBordControl(e) {
+    if (e.code == "NumLock") {
+      statusKeyBordControl = !statusKeyBordControl;
+    }
+    if (e.code == "KeyA" && statusKeyBordControl) {
+      videoSpeed = videoSpeed - stepCounter;
+      yPlayer.playbackRate = videoSpeed;
+      localStorage.setItem("youTubeVideoSpeed", videoSpeed);
+      divSpeedCounter.innerHTML = videoSpeed;
+    }
+    if (e.code == "KeyS" && statusKeyBordControl) {
+      videoSpeed = 1.0;
+      yPlayer.playbackRate = videoSpeed;
+      localStorage.setItem("youTubeVideoSpeed", videoSpeed);
+      divSpeedCounter.innerHTML = videoSpeed;
+    }
+    if (e.code == "KeyD" && statusKeyBordControl) {
+      videoSpeed = videoSpeed + stepCounter;
+      yPlayer.playbackRate = videoSpeed;
+      localStorage.setItem("youTubeVideoSpeed", videoSpeed);
+      divSpeedCounter.innerHTML = videoSpeed;
+    }
+    localStorage.setItem("statusKeyBordControl", statusKeyBordControl);
+  }
+}
+
+// document.addEventListener("DOMContentLoaded", mainfunc());
+
+setTimeout(mainfunc, 4000);
