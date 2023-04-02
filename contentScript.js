@@ -15,7 +15,7 @@ function mainfunc() {
       : yPlayer.playbackRate;
   const stepCounter = 0.25;
 
-  const elementIdForInsert = "limited-state"; // Элемент для вставки
+  const elementIdForInsert = "limited-state"; // Элемент-контейнер для вставки
 
   // Создание элементов интерфейса
   const divSpeedCounter = document.createElement("div");
@@ -25,9 +25,7 @@ function mainfunc() {
   divSpeedCounter.style.fontSize = "30px";
   divSpeedCounter.style.display = "flex";
   divSpeedCounter.style.justifyContent = "center";
-  divSpeedCounter.textContent = document.getElementsByClassName(
-    "video-stream html5-main-video"
-  )[0].playbackRate;
+  divSpeedCounter.textContent = yPlayer.playbackRate;
   divSpeedCounter.classList.add("video-counter");
 
   document.getElementById(elementIdForInsert).appendChild(divSpeedCounter);
