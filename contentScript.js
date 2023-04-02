@@ -2,7 +2,7 @@ let checkExist = setInterval(function () {
   const videoElement = document.getElementById("limited-state");
   if (videoElement) {
     clearInterval(checkExist);
-    // выполнить код, когда элемент будет доступен
+    // выполнить код, когда элемент-контейнер будет доступен
     mainfunc();
   }
 }, 100);
@@ -100,39 +100,38 @@ function mainfunc() {
   }
   setInterval(autoUpdateVideoSpeed, 5000);
 
-  // Упраление с клавиатуры
-  document.addEventListener("keydown", keyBordControl);
-  let statusKeyBordControl =
-    localStorage.getItem("statusKeyBordControl") != null
-      ? localStorage.getItem("statusKeyBordControl")
-      : false;
+  // Функция для управления с клавиатуры
+  (function keyboardControl() {
+    console.log("keyBordControlFunc on");
+    document.addEventListener("keydown", keyBordHandler);
+    let statusKeyBordControl =
+      localStorage.getItem("statusKeyBordControl") != null
+        ? localStorage.getItem("statusKeyBordControl")
+        : false;
 
-  function keyBordControl(e) {
-    if (e.code == "NumLock") {
-      statusKeyBordControl = !statusKeyBordControl;
+    function keyBordHandler(e) {
+      if (e.code == "NumLock") {
+        statusKeyBordControl = !statusKeyBordControl;
+      }
+      if (e.code == "KeyA" && statusKeyBordControl) {
+        videoSpeed = videoSpeed - stepCounter;
+        yPlayer.playbackRate = videoSpeed;
+        localStorage.setItem("youTubeVideoSpeed", videoSpeed);
+        divSpeedCounter.innerHTML = videoSpeed;
+      }
+      if (e.code == "KeyS" && statusKeyBordControl) {
+        videoSpeed = 1.0;
+        yPlayer.playbackRate = videoSpeed;
+        localStorage.setItem("youTubeVideoSpeed", videoSpeed);
+        divSpeedCounter.innerHTML = videoSpeed;
+      }
+      if (e.code == "KeyD" && statusKeyBordControl) {
+        videoSpeed = videoSpeed + stepCounter;
+        yPlayer.playbackRate = videoSpeed;
+        localStorage.setItem("youTubeVideoSpeed", videoSpeed);
+        divSpeedCounter.innerHTML = videoSpeed;
+      }
+      localStorage.setItem("statusKeyBordControl", statusKeyBordControl);
     }
-    if (e.code == "KeyA" && statusKeyBordControl) {
-      videoSpeed = videoSpeed - stepCounter;
-      yPlayer.playbackRate = videoSpeed;
-      localStorage.setItem("youTubeVideoSpeed", videoSpeed);
-      divSpeedCounter.innerHTML = videoSpeed;
-    }
-    if (e.code == "KeyS" && statusKeyBordControl) {
-      videoSpeed = 1.0;
-      yPlayer.playbackRate = videoSpeed;
-      localStorage.setItem("youTubeVideoSpeed", videoSpeed);
-      divSpeedCounter.innerHTML = videoSpeed;
-    }
-    if (e.code == "KeyD" && statusKeyBordControl) {
-      videoSpeed = videoSpeed + stepCounter;
-      yPlayer.playbackRate = videoSpeed;
-      localStorage.setItem("youTubeVideoSpeed", videoSpeed);
-      divSpeedCounter.innerHTML = videoSpeed;
-    }
-    localStorage.setItem("statusKeyBordControl", statusKeyBordControl);
-  }
+  })();
 }
-
-// document.addEventListener("DOMContentLoaded", mainfunc());
-
-// setTimeout(mainfunc, 4000);
