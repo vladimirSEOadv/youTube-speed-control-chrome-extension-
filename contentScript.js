@@ -109,6 +109,7 @@ function mainfunc() {
 
     function keyBordHandler(e) {
       if (e.code == "NumLock") {
+        // Тогл для отключения/включения управления с клавиатуры
         statusKeyBordControl = !statusKeyBordControl;
       }
       if (e.code == "KeyA" && statusKeyBordControl) {
