@@ -45,43 +45,6 @@ function mainfunc() {
   //   }
   // })();
 
-  // =================================================================================================
-
-  // function subtitlesOn() {
-  //   const subtitlesIcon = document.querySelector(".ytp-subtitles-button");
-  //   let status = subtitlesIcon.getAttribute("aria-pressed") === "true";
-  //   if (!status) {
-  //     subtitlesIcon.click(); // Если субтитры выключенны, включить их
-  //   }
-  //   //   // Найти кнопку настройки качества видео
-  //   const settingsButton = document.querySelector(".ytp-settings-button");
-  //   // Кликнуть по ней
-  //   settingsButton.click();
-  //   // Получить окно попапа
-  //   let popap = document.querySelector(".ytp-panel-menu,style-scope");
-  //   const subtitlesInMenuLabel = [...popap.querySelectorAll("span")].find(
-  //     (label) => label.innerText === "Субтитры"
-  //   );
-  //   subtitlesInMenuLabel.click();
-  //   // Нужна задержка, popap должен успеть обновиться
-  //   setTimeout(() => {
-  //     popap = document.querySelector(".ytp-panel-menu,style-scope");
-  //     const translateSubtitlesLabel = [
-  //       ...popap.querySelectorAll(".ytp-menuitem-label"),
-  //     ].find((label) => label.innerText === "Перевести");
-  //     translateSubtitlesLabel.click();
-  //   }, 1000);
-  //   // Нужна задержка, popap должен успеть обновиться
-  //   setTimeout(() => {
-  //     popap = document.querySelector(".ytp-panel-menu,style-scope");
-  //     const russianSubtitlesLabel = [
-  //       ...popap.querySelectorAll(".ytp-menuitem-label"),
-  //     ].find((label) => label.innerText === "Русский");
-  //     russianSubtitlesLabel.click();
-  //   }, 2000);
-  // }
-  // subtitlesOn();
-
   // Создание элементов интерфейса
   const divSpeedCounter = document.createElement("div");
   divSpeedCounter.style.margin = "10px";
