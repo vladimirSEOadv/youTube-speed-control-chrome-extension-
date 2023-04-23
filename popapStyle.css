@@ -1,0 +1,45 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+}
+
+.container {
+    width: 400px;
+}
+
+.header__content {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.section-options {
+    margin-top: 20px;
+}
+.block {
+    display: flex;
+    margin: 10px;
+}
+
+.block__title {
+    min-width: 120px;
+}
+
+.block__picker {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    width: 100%;
+}
+
+.block__picker input{
+    width: 100%;
+}
+.block__picker select{
+    width: 100%;
+}
+
+.block__picker input[type="checkbox"] {
+    width: 30px;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="popapStyle.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="container">
+          <div class="header__content">
+            <h1>YouTube Speed Control options page</h1>
+          </div>
+        </div>
+      </header>
+      <section class="section-options">
+        <div class="container">
+          <div class="block">
+            <div class="block__title">Base speed:</div>
+            <div class="block__picker">
+              <input class="base-speed" type="text" />
+            </div>
+          </div>
+          <div class="block">
+            <div class="block__title">Base quality:</div>
+            <div class="block__picker">
+              <select id="quality-select">
+                <option value="max">Максимальное</option>
+                <option value="1080">1080 HD</option>
+                <option value="720">720p</option>
+                <option value="480">480p</option>
+                <option value="360">360p</option>
+                <option value="144">144p</option>
+                <option value="auto">Авто</option>
+              </select>
+            </div>
+          </div>
+          <div class="block">
+            <div class="block__title">Subtitle:</div>
+            <div class="block__picker">
+              <input type="checkbox" id="subtitle-input" />
+              <select id="translation-language-select">
+                <option value="eng">Английский</option>
+                <option value="ua">Украинский</option>
+                <option value="ru">Русский</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="popap.js"></script>
+  </body>
+</html>
