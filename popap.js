@@ -4,16 +4,6 @@ const subtitleInput = document.querySelector(".block__subtitle-input");
 const translationSelect = document.querySelector(".block__translation-select");
 const store = chrome.storage.local;
 
-// async function get(key) {
-//   const data = await store.get([key]);
-//   console.log("data", data);
-//   return data;
-// }
-
-// const test = get("speed");
-
-// console.log("test", test);
-
 async function set(obj) {
   await store.set(obj);
 }

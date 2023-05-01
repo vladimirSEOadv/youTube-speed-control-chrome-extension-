@@ -8,31 +8,34 @@ let checkExist = setInterval(function () {
 }, 100);
 
 function mainfunc() {
+  console.log("main func start");
   const yPlayer = document.querySelector(".video-stream.html5-main-video");
-  let videoSpeed;
-  if (localStorage.getItem("youTubeVideoSpeed") != null) {
-    videoSpeed = Number(localStorage.getItem("youTubeVideoSpeed"));
-  } else {
-    videoSpeed = yPlayer.playbackRate;
-  }
-  const stepCounter = 0.25;
 
-  const elementIdForInsert = "limited-state"; // Элемент-контейнер для вставки
+  const ELEMENTIDFORINSERT = "limited-state"; // Элемент-контейнер для вставки
 
   // Создание элементов интерфейса
   const divSpeedCounter = document.createElement("div");
   Object.assign(divSpeedCounter.style, {
-    margin: "10px",
-    height: "25px",
-    width: "230px",
+    marginLeft: "90px",
     fontSize: "30px",
-    display: "flex",
-    justifyContent: "center",
   });
-  divSpeedCounter.textContent = yPlayer.playbackRate;
-  divSpeedCounter.classList.add("video-counter");
 
-  document.getElementById(elementIdForInsert).appendChild(divSpeedCounter);
+  // Функция для инициализации начальных значений
+  (function initValues() {
+    store
+      .get(["speed"])
+      .then((data) => {
+        return Number(data.speed) || 1;
+      })
+      .then((newSpeed) => {
+        console.log("init speed", newSpeed);
+        yPlayer.playbackRate = newSpeed;
+        divSpeedCounter.textContent = newSpeed;
+        document
+          .getElementById(ELEMENTIDFORINSERT)
+          .appendChild(divSpeedCounter);
+      });
+  })();
 
   //Конструктор кнопок
   function elementCreator(elementType, backgroundColor, elemText, elemId) {
@@ -46,95 +49,73 @@ function mainfunc() {
       width: "55px",
       color: "white",
     });
-    document.getElementById(elementIdForInsert).appendChild(element);
+    document.getElementById(ELEMENTIDFORINSERT).appendChild(element);
     return element;
+  }
+
+  // Функция для изменения скорости
+  function changeSpeed(changeType) {
+    if (changeType === "normal") {
+      set({ speed: 1 });
+      return;
+    }
+    store
+      .get(["speed"])
+      .then((data) => {
+        const currentSpeed = Number(data.speed);
+        if (changeType === "increase") {
+          return currentSpeed + 0.25;
+        }
+        if (changeType === "decrease") {
+          return currentSpeed - 0.25;
+        }
+      })
+      .then((numb) => set({ speed: numb }));
   }
 
   // Обработчик событий кликов
   document
-    .getElementById(elementIdForInsert)
-    .addEventListener("click", (event) => {
-      switch (event.target.id) {
-        case "fast-button-for-yt-video":
-          videoSpeed = videoSpeed + stepCounter;
-          break;
-        case "normal-button-for-yt-video":
-          videoSpeed = 1.0;
-          break;
-        case "slow-button-for-yt-video":
-          videoSpeed = videoSpeed - stepCounter;
-          break;
-        default:
-          break;
+    .getElementById(ELEMENTIDFORINSERT)
+    .addEventListener("click", async (event) => {
+      if (event.target.id === "fast-button") {
+        changeSpeed("increase");
+      } else if (event.target.id === "normal-button") {
+        changeSpeed("normal");
+      } else if (event.target.id === "slow-button") {
+        changeSpeed("decrease");
       }
-      yPlayer.playbackRate = videoSpeed;
-      localStorage.setItem("youTubeVideoSpeed", videoSpeed);
-      divSpeedCounter.innerHTML = videoSpeed;
     });
 
-  elementCreator("button", "red", "slow", "slow-button-for-yt-video");
-  elementCreator("button", "black", "normal", "normal-button-for-yt-video");
-  elementCreator("button", "green", "fast", "fast-button-for-yt-video");
+  elementCreator("button", "red", "slow", "slow-button");
+  elementCreator("button", "black", "normal", "normal-button");
+  elementCreator("button", "green", "fast", "fast-button");
 
-  // Обновление скорости воспроизведения при запуске
-  function autoUpdateVideoSpeed() {
-    const moviePlayer = document.querySelector("#movie_player");
-    const playingMode = moviePlayer.classList.contains("playing-mode");
-    const player = document.querySelector(".video-stream.html5-main-video");
-    const playbackRateIsCurrent = player.playbackRate === videoSpeed;
-
-    if (playingMode && !playbackRateIsCurrent) {
-      document.querySelector(".video-stream.html5-main-video").playbackRate =
-        videoSpeed;
-      divSpeedCounter.innerHTML = videoSpeed;
-      localStorage.setItem("youTubeVideoSpeed", videoSpeed);
-    }
-  }
-  setInterval(autoUpdateVideoSpeed, 5000);
-
-  // Функция для управления с клавиатуры
-  (function keyboardControl() {
-    console.log("keyBordControlFunc on");
-    document.addEventListener("keydown", keyBordHandler);
-    let statusKeyBordControl =
-      localStorage.getItem("statusKeyBordControl") != null
-        ? localStorage.getItem("statusKeyBordControl")
-        : false;
-
-    function keyBordHandler(e) {
-      if (e.code === "NumLock") {
-        statusKeyBordControl = !statusKeyBordControl;
-        return;
-      } else if (!statusKeyBordControl) {
-        return;
-      } else {
-        console.log("KeyBordControl ", statusKeyBordControl);
-      }
-
-      switch (e.code) {
-        case "KeyA":
-          videoSpeed = videoSpeed - stepCounter;
-          yPlayer.playbackRate = videoSpeed;
-          localStorage.setItem("youTubeVideoSpeed", videoSpeed);
-          divSpeedCounter.innerHTML = videoSpeed;
+  function handelerChangeStore(changes) {
+    console.log("changes", changes);
+    for (let key in changes) {
+      switch (key) {
+        case "speed":
+          divSpeedCounter.innerHTML = Number(changes.speed.newValue);
+          yPlayer.playbackRate = Number(changes.speed.newValue);
           break;
-        case "KeyS":
-          videoSpeed = 1.0;
-          yPlayer.playbackRate = videoSpeed;
-          localStorage.setItem("youTubeVideoSpeed", videoSpeed);
-          divSpeedCounter.innerHTML = videoSpeed;
+        case "quality":
+          //   qualitySelect.value = changes.quality.newValue;
           break;
-        case "KeyD":
-          videoSpeed = videoSpeed + stepCounter;
-          yPlayer.playbackRate = videoSpeed;
-          localStorage.setItem("youTubeVideoSpeed", videoSpeed);
-          divSpeedCounter.innerHTML = videoSpeed;
+        case "subtitleStatus":
+          //   subtitleInput.checked = changes.subtitleStatus.newValue;
+          break;
+        case "translationLang":
+          //   translationSelect.value = changes.translationLang.newValue;
           break;
         default:
-          return;
+          console.log("unknown key in handeleChangeStore", key);
+          break;
       }
-
-      localStorage.setItem("statusKeyBordControl", statusKeyBordControl);
     }
-  })();
+  }
+
+  store.onChanged.addListener(handelerChangeStore);
+
+  // Функция для управления с клавиатуры
+  keyboardControl();
 }
