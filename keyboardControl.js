@@ -1,27 +1,22 @@
 function keyboardControl() {
   console.log("keyBordControlFunc on");
-  document.addEventListener("keydown", keyBordHandler);
-  let statusKeyBordControl =
-    localStorage.getItem("statusKeyBordControl") != null
-      ? localStorage.getItem("statusKeyBordControl")
+  document.addEventListener("keydown", keyboardHandler);
+  let statusKeyboardControl =
+    localStorage.getItem("statusKeyboardControl") != null
+      ? localStorage.getItem("statusKeyboardControl")
       : false;
 
-  function keyBordHandler(e) {
-    if (e.code === "NumLock") {
-      statusKeyBordControl = !statusKeyBordControl;
-      return;
-    } else if (!statusKeyBordControl) {
-      return;
-    }
-
-    // Функция для округления x - число, n - количество знаков
+  function keyboardHandler(e) {
+    // Функция для округления x - число, n - количество знаков. Необходима для исключения багов при сложении нецелочисленных значений
     function roundPlus(x, n) {
-      if (isNaN(x) || isNaN(n)) return false;
       const m = Math.pow(10, n);
       return Math.round(x * m) / m;
     }
 
     switch (e.code) {
+      case "NumLock":
+        statusKeyboardControl = !statusKeyboardControl;
+        break;
       case "KeyA":
         store
           .get(["speed"])
@@ -47,6 +42,6 @@ function keyboardControl() {
         return;
     }
 
-    localStorage.setItem("statusKeyBordControl", statusKeyBordControl);
+    localStorage.setItem("statusKeyboardControl", statusKeyboardControl);
   }
 }

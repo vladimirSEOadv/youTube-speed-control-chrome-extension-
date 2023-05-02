@@ -15,7 +15,7 @@
     {
       "matches": ["https://www.youtube.com/watch?v=*"],
       "js": [
-        "localStore.js", "contentScript.js", "keybordControl.js"
+        "localStore.js", "createInputRange.js","contentScript.js", "keyboardControl.js"
       ]
     }
   ]

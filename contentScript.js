@@ -11,17 +11,16 @@ function mainfunc() {
   console.log("main func start");
   const yPlayer = document.querySelector(".video-stream.html5-main-video");
 
-  const ELEMENTIDFORINSERT = "limited-state"; // Элемент-контейнер для вставки
+  // Элемент-контейнер для вставки
+  const ELEMENTIDFORINSERT = "limited-state";
 
-  // Создание элементов интерфейса
-  const divSpeedCounter = document.createElement("div");
-  Object.assign(divSpeedCounter.style, {
-    marginLeft: "90px",
-    fontSize: "30px",
-  });
+  // Создание элементов rangeInput
+  const rangeInputContainer = createInputRange();
+  console.log(rangeInputContainer);
+  const rangeInput = rangeInputContainer.querySelector("#range-input");
 
   // Функция для инициализации начальных значений
-  (function initValues() {
+  function initValues() {
     store
       .get(["speed"])
       .then((data) => {
@@ -30,72 +29,30 @@ function mainfunc() {
       .then((newSpeed) => {
         console.log("init speed", newSpeed);
         yPlayer.playbackRate = newSpeed;
-        divSpeedCounter.textContent = newSpeed;
+        rangeInput.value = newSpeed;
         document
           .getElementById(ELEMENTIDFORINSERT)
-          .appendChild(divSpeedCounter);
+          .appendChild(rangeInputContainer);
       });
-  })();
-
-  //Конструктор кнопок
-  function elementCreator(elementType, backgroundColor, elemText, elemId) {
-    const element = document.createElement(elementType);
-    element.id = elemId;
-    element.textContent = elemText;
-    element.style.backgroundColor = backgroundColor;
-    Object.assign(element.style, {
-      margin: "10px",
-      height: "25px",
-      width: "55px",
-      color: "white",
-    });
-    document.getElementById(ELEMENTIDFORINSERT).appendChild(element);
-    return element;
   }
+  initValues();
 
-  // Функция для изменения скорости
-  function changeSpeed(changeType) {
-    if (changeType === "normal") {
-      set({ speed: 1 });
-      return;
-    }
-    store
-      .get(["speed"])
-      .then((data) => {
-        const currentSpeed = Number(data.speed);
-        if (changeType === "increase") {
-          return currentSpeed + 0.25;
-        }
-        if (changeType === "decrease") {
-          return currentSpeed - 0.25;
-        }
-      })
-      .then((numb) => set({ speed: numb }));
+  function changeSpeed(value) {
+    set({ speed: value });
   }
 
   // Обработчик событий кликов
-  document
-    .getElementById(ELEMENTIDFORINSERT)
-    .addEventListener("click", async (event) => {
-      if (event.target.id === "fast-button") {
-        changeSpeed("increase");
-      } else if (event.target.id === "normal-button") {
-        changeSpeed("normal");
-      } else if (event.target.id === "slow-button") {
-        changeSpeed("decrease");
-      }
-    });
+  rangeInput.addEventListener("click", async (event) => {
+    const currentSpeed = event.target.value;
+    changeSpeed(currentSpeed);
+  });
 
-  elementCreator("button", "red", "slow", "slow-button");
-  elementCreator("button", "black", "normal", "normal-button");
-  elementCreator("button", "green", "fast", "fast-button");
-
-  function handelerChangeStore(changes) {
+  function handlerChangeStore(changes) {
     console.log("changes", changes);
     for (let key in changes) {
       switch (key) {
         case "speed":
-          divSpeedCounter.innerHTML = Number(changes.speed.newValue);
+          rangeInput.value = Number(changes.speed.newValue);
           yPlayer.playbackRate = Number(changes.speed.newValue);
           break;
         case "quality":
@@ -108,13 +65,13 @@ function mainfunc() {
           //   translationSelect.value = changes.translationLang.newValue;
           break;
         default:
-          console.log("unknown key in handeleChangeStore", key);
+          console.log("unknown key in handlerChangeStore", key);
           break;
       }
     }
   }
 
-  store.onChanged.addListener(handelerChangeStore);
+  store.onChanged.addListener(handlerChangeStore);
 
   // Функция для управления с клавиатуры
   keyboardControl();

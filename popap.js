@@ -1,7 +1,8 @@
-const speedInput = document.querySelector(".block__input-speed");
-const qualitySelect = document.querySelector(".block__quality-select");
-const subtitleInput = document.querySelector(".block__subtitle-input");
-const translationSelect = document.querySelector(".block__translation-select");
+const speedInput = document.querySelector("#input-speed");
+const qualitySelect = document.querySelector("#quality-select");
+const subtitleInput = document.querySelector("#subtitle-checkbox");
+const translationSelect = document.querySelector("#translation-select");
+const mouseLeaveCheckbox = document.querySelector("#mouse-leave-checkbox");
 const store = chrome.storage.local;
 
 async function set(obj) {
@@ -41,6 +42,8 @@ function handleInput(e) {
     const translationValue =
       translationSelect.options[translationSelect.selectedIndex].value;
     set({ translationLang: translationValue });
+  } else {
+    console.log(`Обработчик для ${e.target} не определен`);
   }
 }
 
