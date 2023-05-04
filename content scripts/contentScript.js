@@ -12,12 +12,19 @@ function mainfunc() {
   const yPlayer = document.querySelector(".video-stream.html5-main-video");
 
   // Элемент-контейнер для вставки
-  const ELEMENTIDFORINSERT = "limited-state";
+  const externalContainer = document.getElementById("limited-state");
+  const innerContainer = document.querySelector(".ytp-chapter-container"); // Внутренний контейнер для вставки
+  innerContainer.style.display = "flex";
 
   // Создание элементов rangeInput
-  const rangeInputContainer = createInputRange();
-  console.log(rangeInputContainer);
-  const rangeInput = rangeInputContainer.querySelector("#range-input");
+  const externaInputRangeContainer = createInputRange("external"); // Внешний контейнер для вставки
+  const externalInputRange = externaInputRangeContainer.querySelector(
+    "#external-range-input"
+  );
+
+  const innerInputRangeContainer = createInputRange("inner");
+  const innerlInputRange =
+    innerInputRangeContainer.querySelector("#inner-range-input");
 
   // Функция для инициализации начальных значений
   function initValues() {
@@ -29,10 +36,12 @@ function mainfunc() {
       .then((newSpeed) => {
         console.log("init speed", newSpeed);
         yPlayer.playbackRate = newSpeed;
-        rangeInput.value = newSpeed;
-        document
-          .getElementById(ELEMENTIDFORINSERT)
-          .appendChild(rangeInputContainer);
+
+        externalInputRange.value = newSpeed;
+        innerlInputRange.value = newSpeed;
+
+        externalContainer.appendChild(externaInputRangeContainer);
+        innerContainer.prepend(innerInputRangeContainer);
       });
   }
   initValues();
@@ -41,18 +50,22 @@ function mainfunc() {
     set({ speed: value });
   }
 
-  // Обработчик событий кликов
-  rangeInput.addEventListener("click", async (event) => {
-    const currentSpeed = event.target.value;
-    changeSpeed(currentSpeed);
-  });
+  // Обработчик событий кликов //
+  [externalInputRange, innerlInputRange].forEach((element) =>
+    element.addEventListener("click", (event) => {
+      const currentSpeed = event.target.value;
+      changeSpeed(currentSpeed);
+    })
+  );
 
   function handlerChangeStore(changes) {
     console.log("changes", changes);
     for (let key in changes) {
       switch (key) {
         case "speed":
-          rangeInput.value = Number(changes.speed.newValue);
+          externalInputRange.value = Number(changes.speed.newValue);
+          innerlInputRange.value = Number(changes.speed.newValue);
+
           yPlayer.playbackRate = Number(changes.speed.newValue);
           break;
         case "quality":

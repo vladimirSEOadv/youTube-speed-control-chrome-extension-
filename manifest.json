@@ -9,14 +9,18 @@
     "storage"
   ],
   "action": {
-    "default_popup": "index.html"
+    "default_popup": "./popap/index.html"
   },
   "content_scripts": [
     {
       "matches": ["https://www.youtube.com/watch?v=*"],
       "js": [
-        "localStore.js", "createInputRange.js","contentScript.js", "keyboardControl.js"
-      ]
+        "./content scripts/localStore.js",
+        "./content scripts/createInputRange.js",
+        "./content scripts/contentScript.js",
+        "./content scripts/keyboardControl.js"
+      ],
+      "run_at": "document_start"
     }
   ]
 }
