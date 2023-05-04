@@ -1,9 +1,5 @@
 function keyboardControl() {
   document.addEventListener("keydown", keyboardHandler);
-  let statusKeyboardControl =
-    localStorage.getItem("statusKeyboardControl") != null
-      ? localStorage.getItem("statusKeyboardControl")
-      : false;
 
   // Функция для округления
   // Необходима для исключения багов при сложении нецелочисленных значений
@@ -13,41 +9,50 @@ function keyboardControl() {
     return Math.round(x * m) / m;
   }
 
-  function keyboardHandler(e) {
-    // const statusKeyboardControl = store.get(["statusKeyboardControl"])
-    if (e.code === "NumLock") {
-      statusKeyboardControl = !statusKeyboardControl;
-    }
+  //increase decrease normal
+  async function updateSpeed(operator = "increase") {
+    if (operator === "normal") set({ speed: 1 });
+    const currentSpeedObj = await store.get(["speed"]);
+    const currentSpeedValue = Number(currentSpeedObj.speed);
+    const newSpeed =
+      operator === "increase"
+        ? currentSpeedValue + 0.1
+        : currentSpeedValue - 0.1;
+    const rounded = roundPlus(newSpeed, 1);
+    await set({ speed: rounded });
+  }
 
-    if (statusKeyboardControl === false) {
+  async function changeStatus(status) {
+    const newStatus = !status;
+    await set({ statusKeyboardControl: newStatus });
+  }
+
+  async function getStatus() {
+    const current = await store.get(["statusKeyboardControl"]);
+    if (current === null) return false;
+    return await current.statusKeyboardControl;
+  }
+
+  async function keyboardHandler(e) {
+    const currentStatus = await getStatus();
+    if (e.code === "NumLock") {
+      await changeStatus(currentStatus);
+    }
+    if (currentStatus === false) {
       return;
     }
     switch (e.code) {
       case "KeyA":
-        store
-          .get(["speed"])
-          .then((data) => {
-            const value = Number(data.speed) - 0.1;
-            return roundPlus(value, 1);
-          })
-          .then((numb) => set({ speed: numb }));
+        await updateSpeed("decrise");
         break;
       case "KeyS":
-        set({ speed: 1 });
+        await updateSpeed("normal");
         break;
       case "KeyD":
-        store
-          .get(["speed"])
-          .then((data) => {
-            const value = Number(data.speed) + 0.1;
-            return roundPlus(value, 1);
-          })
-          .then((numb) => set({ speed: numb }));
+        await updateSpeed("increase");
         break;
       default:
         return;
     }
-
-    localStorage.setItem("statusKeyboardControl", statusKeyboardControl);
   }
 }
