@@ -1,0 +1,40 @@
+.range-container {
+    width: 200px;
+    padding: 5px;
+}
+
+.external-range-container {
+    border: 1px solid #bab1b1;
+    border-radius: 10px;
+}
+
+.range-container__input-range {
+    width: 100%;
+    margin: 0;
+}
+
+.range-container__datalist {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: -7px;
+}
+
+.datalist__option {
+    margin-right: 5px;
+    font-size: 20px;
+    background-color: white;
+}
+
+.ytp-chapter-container {
+    display: flex;
+}
+
+/* #external-range-input {
+    
+}
+
+#inner-range-input {
+
+} */

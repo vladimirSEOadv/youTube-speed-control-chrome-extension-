@@ -1,12 +1,3 @@
-let checkExist = setInterval(function () {
-  const videoElement = document.getElementById("limited-state");
-  if (videoElement) {
-    clearInterval(checkExist);
-    // выполнить код, когда элемент-контейнер будет доступен
-    mainfunc();
-  }
-}, 100);
-
 function mainfunc() {
   console.log("main func start");
   const yPlayer = document.querySelector(".video-stream.html5-main-video");
@@ -14,20 +5,16 @@ function mainfunc() {
   // Элемент-контейнер для вставки
   const externalContainer = document.getElementById("limited-state");
   const innerContainer = document.querySelector(".ytp-chapter-container"); // Внутренний контейнер для вставки
-  innerContainer.style.display = "flex";
 
   // Создание элементов rangeInput
-  const externaInputRangeContainer = createInputRange("external"); // Внешний контейнер для вставки
-  const externalInputRange = externaInputRangeContainer.querySelector(
-    "#external-range-input"
-  );
+  const [externaInputRangeContainer, externalInputRange] =
+    createInputRange("external");
 
-  const innerInputRangeContainer = createInputRange("inner");
-  const innerlInputRange =
-    innerInputRangeContainer.querySelector("#inner-range-input");
+  const [innerInputRangeContainer, innerlInputRange] =
+    createInputRange("inner");
 
   // Функция для инициализации начальных значений
-  function initValues() {
+  (function initValues() {
     store
       .get(["speed"])
       .then((data) => {
@@ -43,8 +30,7 @@ function mainfunc() {
         externalContainer.appendChild(externaInputRangeContainer);
         innerContainer.prepend(innerInputRangeContainer);
       });
-  }
-  initValues();
+  })();
 
   function changeSpeed(value) {
     set({ speed: value });

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "YouTube Speed Control",
   "icons": {
-    "120": "120.png"
+    "120": "./assets/120.png"
   },
   "version": "1.3.0",
   "permissions": [
@@ -18,8 +18,10 @@
         "./content scripts/localStore.js",
         "./content scripts/createInputRange.js",
         "./content scripts/contentScript.js",
+        "./content scripts/inject.js",
         "./content scripts/keyboardControl.js"
       ],
+      "css": ["./content scripts/content-script-styles.css"],
       "run_at": "document_start"
     }
   ]
