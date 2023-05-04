@@ -32,15 +32,11 @@ function mainfunc() {
       });
   })();
 
-  function changeSpeed(value) {
-    set({ speed: value });
-  }
-
   // Обработчик событий кликов //
   [externalInputRange, innerlInputRange].forEach((element) =>
     element.addEventListener("click", (event) => {
       const currentSpeed = event.target.value;
-      changeSpeed(currentSpeed);
+      set({ speed: currentSpeed });
     })
   );
 
@@ -51,7 +47,6 @@ function mainfunc() {
         case "speed":
           externalInputRange.value = Number(changes.speed.newValue);
           innerlInputRange.value = Number(changes.speed.newValue);
-
           yPlayer.playbackRate = Number(changes.speed.newValue);
           break;
         case "quality":
@@ -71,7 +66,4 @@ function mainfunc() {
   }
 
   store.onChanged.addListener(handlerChangeStore);
-
-  // Функция для управления с клавиатуры
-  keyboardControl();
 }

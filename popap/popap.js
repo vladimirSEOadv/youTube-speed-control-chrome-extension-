@@ -1,8 +1,8 @@
-const speedInput = document.querySelector("#input-speed");
-const qualitySelect = document.querySelector("#quality-select");
-const subtitleInput = document.querySelector("#subtitle-checkbox");
-const translationSelect = document.querySelector("#translation-select");
-const mouseLeaveCheckbox = document.querySelector("#mouse-leave-checkbox");
+const speedInput = document.getElementById("input-speed");
+const qualitySelect = document.getElementById("quality-select");
+const subtitleInput = document.getElementById("subtitle-checkbox");
+const translationSelect = document.getElementById("translation-select");
+const mouseLeaveCheckbox = document.getElementById("mouse-leave-checkbox");
 const store = chrome.storage.local;
 
 async function set(obj) {

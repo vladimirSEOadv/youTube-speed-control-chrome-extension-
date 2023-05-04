@@ -3,6 +3,9 @@ const injectFunc = setInterval(function () {
   const videoElement = document.getElementById("limited-state");
   if (videoElement) {
     clearInterval(injectFunc);
+    // Основная функция
     mainfunc();
+    // Функция для управления с клавиатуры
+    keyboardControl();
   }
 }, 100);

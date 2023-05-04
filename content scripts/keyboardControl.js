@@ -1,22 +1,28 @@
 function keyboardControl() {
-  console.log("keyBordControlFunc on");
   document.addEventListener("keydown", keyboardHandler);
   let statusKeyboardControl =
     localStorage.getItem("statusKeyboardControl") != null
       ? localStorage.getItem("statusKeyboardControl")
       : false;
 
+  // Функция для округления
+  // Необходима для исключения багов при сложении нецелочисленных значений
+  // x - число, n - количество знаков.
+  function roundPlus(x, n) {
+    const m = Math.pow(10, n);
+    return Math.round(x * m) / m;
+  }
+
   function keyboardHandler(e) {
-    // Функция для округления x - число, n - количество знаков. Необходима для исключения багов при сложении нецелочисленных значений
-    function roundPlus(x, n) {
-      const m = Math.pow(10, n);
-      return Math.round(x * m) / m;
+    // const statusKeyboardControl = store.get(["statusKeyboardControl"])
+    if (e.code === "NumLock") {
+      statusKeyboardControl = !statusKeyboardControl;
     }
 
+    if (statusKeyboardControl === false) {
+      return;
+    }
     switch (e.code) {
-      case "NumLock":
-        statusKeyboardControl = !statusKeyboardControl;
-        break;
       case "KeyA":
         store
           .get(["speed"])
