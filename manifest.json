@@ -17,6 +17,7 @@
       "js": [
         "./content scripts/localStore.js",
         "./content scripts/createInputRange.js",
+        "./content scripts/setQuality.js",
         "./content scripts/contentScript.js",
         "./content scripts/inject.js",
         "./content scripts/keyboardControl.js"

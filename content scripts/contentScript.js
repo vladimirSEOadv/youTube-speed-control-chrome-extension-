@@ -21,7 +21,6 @@ function mainfunc() {
         return Number(data.speed) || 1;
       })
       .then((newSpeed) => {
-        console.log("init speed", newSpeed);
         yPlayer.playbackRate = newSpeed;
 
         externalInputRange.value = newSpeed;
@@ -29,6 +28,14 @@ function mainfunc() {
 
         externalContainer.appendChild(externaInputRangeContainer);
         innerContainer.prepend(innerInputRangeContainer);
+      });
+    store
+      .get(["quality"])
+      .then((data) => {
+        return data.quality || "max";
+      })
+      .then((value) => {
+        setQuality(value);
       });
   })();
 
@@ -50,7 +57,8 @@ function mainfunc() {
           yPlayer.playbackRate = Number(changes.speed.newValue);
           break;
         case "quality":
-          //   qualitySelect.value = changes.quality.newValue;
+          setQuality(changes.quality);
+          console.log("current quality: ", changes.quality);
           break;
         case "subtitleStatus":
           //   subtitleInput.checked = changes.subtitleStatus.newValue;
@@ -58,12 +66,32 @@ function mainfunc() {
         case "translationLang":
           //   translationSelect.value = changes.translationLang.newValue;
           break;
+        case "statusKeyboardControl":
+          console.log("statusKeyboardControl ", changes.statusKeyboardControl);
+          break;
         default:
           console.log("unknown key in handlerChangeStore", key);
           break;
       }
     }
   }
-
+  // function checkQuality() {
+  //   return (
+  //     (document.querySelector(".ytp-4k-quality-badge") ||
+  //       document.querySelector(".ytp-hd-quality-badge")) !== null
+  //   );
+  // }
+  // const updateQuality = setInterval(() => {
+  //   store
+  //     .get(["quality"])
+  //     .then((data) => {
+  //       return data.quality || "max";
+  //     })
+  //     .then((value) => {
+  //       if (checkQuality()) {
+  //         setQuality(value);
+  //       }
+  //     });
+  // }, 10000);
   store.onChanged.addListener(handlerChangeStore);
 }
