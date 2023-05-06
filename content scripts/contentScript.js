@@ -34,8 +34,20 @@ function mainfunc() {
       .then((data) => {
         return data.quality || "max";
       })
-      .then((value) => {
-        setQuality(value);
+      .then((currentQuality) => {
+        setQuality(currentQuality);
+      });
+    store
+      .get(["subtitleStatus"])
+      .then((data) => {
+        return data.subtitleStatus || false;
+      })
+      .then((currentStatus) => {
+        if (currentStatus) {
+          setSubtitleStatus("on");
+        } else {
+          setSubtitleStatus("off");
+        }
       });
   })();
 
@@ -57,17 +69,22 @@ function mainfunc() {
           yPlayer.playbackRate = Number(changes.speed.newValue);
           break;
         case "quality":
-          setQuality(changes.quality);
-          console.log("current quality: ", changes.quality);
+          setQuality(changes.quality.newValue);
+          console.log("current quality: ", changes.quality.newValue);
           break;
         case "subtitleStatus":
-          //   subtitleInput.checked = changes.subtitleStatus.newValue;
+          const newSubtitleStatus =
+            changes.subtitleStatus.newValue === true ? "on" : "off";
+          setSubtitleStatus(newSubtitleStatus);
           break;
         case "translationLang":
-          //   translationSelect.value = changes.translationLang.newValue;
+          setSubtitleTranslationLanguage(changes.translationLang.newValue);
           break;
         case "statusKeyboardControl":
-          console.log("statusKeyboardControl ", changes.statusKeyboardControl);
+          console.log(
+            "statusKeyboardControl ",
+            changes.statusKeyboardControl.newValue
+          );
           break;
         default:
           console.log("unknown key in handlerChangeStore", key);
