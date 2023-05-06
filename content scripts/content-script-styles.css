@@ -1,3 +1,7 @@
+.ytp-chapter-container {
+    display: flex !important;
+}
+
 .range-container {
     width: 200px;
     padding: 5px;
