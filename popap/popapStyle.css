@@ -17,33 +17,6 @@
 .section-options {
     margin-top: 20px;
 }
-/* .block {
-    height: 25px;
-    display: flex;
-    margin: 10px;
-}
-.block__title{
-    min-width: 120px;
-}
-
-.block__picker {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 10px;
-    width: 200px;
-    margin-right: 15px;
-    justify-content: space-between;
-}
-.block__picker input, select{
-    width: 100%;
-    left: 0; 
-}
-
-input[type="checkbox"] {
-    width: 30px;
-    margin-right: 1px;
-}
-*/
 
 input[type="text"], select {
     border: none;
@@ -72,15 +45,7 @@ input[type="text"]:focus-visible, select:focus-visible {
     width: 170px;
 }
 
-/* .input-wrapper__input {
-    background-color: aqua;
-
-    border: none;
-    
-} */
-
 .input-wrapper__select {
-    /* width: 50%; */
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 5px;
