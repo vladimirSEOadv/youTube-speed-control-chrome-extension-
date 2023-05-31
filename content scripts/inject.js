@@ -4,7 +4,7 @@ const injectFunc = setInterval(function () {
   if (videoElement) {
     clearInterval(injectFunc);
     // Основная функция
-    mainfunc();
+    mainFunc();
     // Функция для управления с клавиатуры
     keyboardControl();
   }

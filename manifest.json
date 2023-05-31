@@ -19,7 +19,7 @@
         "./content scripts/createInputRange.js",
         "./content scripts/setQuality.js",
         "./content scripts/subtitlesTranslate.js",
-        "./content scripts/contentScript.js",
+        "./content scripts/main.js",
         "./content scripts/inject.js",
         "./content scripts/keyboardControl.js"
       ],
