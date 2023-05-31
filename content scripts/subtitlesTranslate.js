@@ -53,7 +53,7 @@ function setSubtitleTranslationLanguage(language = "Русский") {
       );
       subtitlesLabel?.click();
     } catch (error) {
-      console.log("Error of find lang labels", error);
+      console.log("Error of find lang label", error);
     }
   }, 3000);
 }
