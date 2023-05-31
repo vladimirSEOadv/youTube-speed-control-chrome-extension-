@@ -1,15 +1,4 @@
 // Установить качество видео на выбранное
-
-// function waitSelector(startSelector, targetSelector) {
-//   const interval = setInterval(function () {
-//     const selector = startSelector.querySelector(targetSelector);
-//     if (selector) {
-//       clearInterval(interval);
-//       return selector;
-//     }
-//   }, 1000);
-// }
-
 function changeQuality(arrOfElements, requiredValue) {
   const maxQuality = arrOfElements[0];
   const auto = arrOfElements[arrOfElements.length - 1];

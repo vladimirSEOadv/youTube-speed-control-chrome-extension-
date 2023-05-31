@@ -1,13 +1,3 @@
-// function waitSelector(startSelector, targetSelector) {
-//   const interval = setInterval(function () {
-//     const selector = startSelector.querySelector(targetSelector);
-//     if (selector) {
-//       clearInterval(interval);
-//       return selector;
-//     }
-//   }, 1000);
-// }
-
 function setSubtitleStatus(status = "on") {
   const targetStatus = status === "on";
   const subtitlesIcon = document.querySelector(".ytp-subtitles-button");
@@ -43,17 +33,19 @@ function setSubtitleTranslationLanguage(language = "Русский") {
   // Нужна задержка, popap должен успеть обновиться
   setTimeout(() => {
     popap = document.querySelector(".ytp-panel-menu,style-scope");
-    const translateSubtitlesLabel = [
-      ...popap.querySelectorAll(".ytp-menuitem-label"),
-    ].find((label) => label.innerText === "Перевести");
+    const nodes = popap.querySelectorAll(".ytp-menuitem-label");
+    const translateSubtitlesLabel = Array.from(nodes).find(
+      (label) => label.innerText === "Перевести"
+    );
     translateSubtitlesLabel.click();
   }, 2000);
   // Нужна задержка, popap должен успеть обновиться
   setTimeout(() => {
     popap = document.querySelector(".ytp-panel-menu,style-scope");
-    const subtitlesLabel = [
-      ...popap.querySelectorAll(".ytp-menuitem-label"),
-    ].find((label) => label.innerText === language);
+    const lengNodes = popap.querySelectorAll(".ytp-menuitem-label");
+    const subtitlesLabel = Array.from(lengNodes).find(
+      (item) => item.innerText === language
+    );
     subtitlesLabel?.click();
   }, 3000);
 }

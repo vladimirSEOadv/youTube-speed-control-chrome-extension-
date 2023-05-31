@@ -1,4 +1,4 @@
-function mainfunc() {
+function mainFunc() {
   console.log("main func start");
   const yPlayer = document.querySelector(".video-stream.html5-main-video");
 
@@ -10,8 +10,7 @@ function mainfunc() {
   const [externaInputRangeContainer, externalInputRange] =
     createInputRange("external");
 
-  const [innerInputRangeContainer, innerlInputRange] =
-    createInputRange("inner");
+  const [innerInputRangeContainer, innerInputRange] = createInputRange("inner");
 
   // Функция для инициализации начальных значений
   (function initValues() {
@@ -24,7 +23,7 @@ function mainfunc() {
         yPlayer.playbackRate = newSpeed;
 
         externalInputRange.value = newSpeed;
-        innerlInputRange.value = newSpeed;
+        innerInputRange.value = newSpeed;
 
         externalContainer.appendChild(externaInputRangeContainer);
         innerContainer.prepend(innerInputRangeContainer);
@@ -48,11 +47,21 @@ function mainfunc() {
         } else {
           setSubtitleStatus("off");
         }
+        return currentStatus;
+      })
+      .then((currentStatus) => {
+        if (currentStatus) {
+          setTimeout(() => {
+            store.get(["translationLang"]).then((lang) => {
+              setSubtitleTranslationLanguage(lang.translationLang);
+            });
+          }, 5000);
+        }
       });
   })();
 
   // Обработчик событий кликов //
-  [externalInputRange, innerlInputRange].forEach((element) =>
+  [externalInputRange, innerInputRange].forEach((element) =>
     element.addEventListener("click", (event) => {
       const currentSpeed = event.target.value;
       set({ speed: currentSpeed });
@@ -65,7 +74,7 @@ function mainfunc() {
       switch (key) {
         case "speed":
           externalInputRange.value = Number(changes.speed.newValue);
-          innerlInputRange.value = Number(changes.speed.newValue);
+          innerInputRange.value = Number(changes.speed.newValue);
           yPlayer.playbackRate = Number(changes.speed.newValue);
           break;
         case "quality":
@@ -92,23 +101,6 @@ function mainfunc() {
       }
     }
   }
-  // function checkQuality() {
-  //   return (
-  //     (document.querySelector(".ytp-4k-quality-badge") ||
-  //       document.querySelector(".ytp-hd-quality-badge")) !== null
-  //   );
-  // }
-  // const updateQuality = setInterval(() => {
-  //   store
-  //     .get(["quality"])
-  //     .then((data) => {
-  //       return data.quality || "max";
-  //     })
-  //     .then((value) => {
-  //       if (checkQuality()) {
-  //         setQuality(value);
-  //       }
-  //     });
-  // }, 10000);
+
   store.onChanged.addListener(handlerChangeStore);
 }
