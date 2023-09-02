@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="popapStyle.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="container">
+          <div class="header__content">
+            <h1>YouTube Speed Control options page</h1>
+          </div>
+        </div>
+      </header>
+      <section class="section-options">
+        <div class="container">
+          <div class="block">
+            <div class="block__title">Base speed:</div>
+            <div class="block__picker block-picker">
+              <div class="block-picker__input-wrapper">
+                <input
+                  id="input-speed"
+                  class="input-wrapper__input"
+                  type="number"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="block">
+            <div class="block__title">Base quality:</div>
+            <div class="block__picker block-picker">
+              <div class="block-picker__input-wrapper input-wrapper">
+                <select id="quality-select" class="input-wrapper__select">
+                  <option value="max">Максимальное</option>
+                  <option value="2160p 4K">2160p 4K</option>
+                  <option value="1440p HD">1440p HD</option>
+                  <option value="1080 HD">1080 HD</option>
+                  <option value="720p">720p</option>
+                  <option value="480p">480p</option>
+                  <option value="360p">360p</option>
+                  <option value="240p">240p</option>
+                  <option value="144p">144p</option>
+                  <option value="auto">Авто</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="block">
+            <div class="block__title">Subtitle:</div>
+            <div class="block__picker block-picker">
+              <input
+                type="checkbox"
+                id="subtitle-checkbox"
+                class="block-picker__checkbox"
+              />
+              <select id="translation-select" class="block-picker__select">
+                <option value="Английский">Английский</option>
+                <option value="Украинский">Украинский</option>
+                <option value="Русский">Русский</option>
+              </select>
+            </div>
+          </div>
+          <div class="block">
+            <div class="block__title">MouseLeave pause</div>
+            <div class="block__picker block-picker">
+              <input
+                type="checkbox"
+                id="mouse-leave-checkbox"
+                class="block-picker__checkbox"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="popap.js"></script>
+  </body>
+</html>

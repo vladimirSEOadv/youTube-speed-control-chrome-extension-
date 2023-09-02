@@ -1,0 +1,60 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+    outline: 0;
+    outline-offset: 0;
+}
+.container {
+    width: 400px;
+    overflow: hidden;
+}
+.header__content {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.section-options {
+    margin-top: 20px;
+}
+
+input[type="text"], select {
+    border: none;
+    overflow: hidden;
+    z-index: -1;
+    background: transparent;
+}
+
+input[type="text"]:focus-visible, select:focus-visible {
+    border: none;
+}
+
+.block {
+    margin: 10px;
+    width: 80%;
+    }
+
+.block__title{
+    font-size: 23px;
+    margin: 2px 0;
+}
+
+.input-wrapper {
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 170px;
+}
+
+.input-wrapper__select {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    text-align: justify;
+}
+
+ .block-picker__checkbox {
+    margin: 5px;
+    padding: 0;
+    /* font-size: 35px; */
+    transform:scale(1.5);
+}
