@@ -1,8 +1,8 @@
 // выполнить код, когда элемент-контейнер будет доступен
-const injectFunc = setInterval(function () {
+const injectInterval = setInterval(function () {
   const videoElement = document.getElementById("limited-state");
   if (videoElement) {
-    clearInterval(injectFunc);
+    clearInterval(injectInterval);
     // Основная функция
     mainFunc();
     // Функция для управления с клавиатуры

@@ -1,12 +1,12 @@
-// Установить качество видео на выбранное
+// Функция выполняющая поиск на последнем шаге. Выбирает из списка нод наиболее подходящую.
 function changeQuality(arrOfElements, requiredValue) {
   const maxQuality = arrOfElements[0];
-  const auto = arrOfElements[arrOfElements.length - 1];
   if (requiredValue === "max") {
     maxQuality.click();
     return;
   }
   if (requiredValue === "auto") {
+    const auto = arrOfElements[arrOfElements.length - 1];
     auto.click();
     return;
   }
@@ -26,6 +26,7 @@ function changeQuality(arrOfElements, requiredValue) {
   }
 }
 
+// Функция проходит путь от клика по кнопке до результата.
 function setQuality(quality) {
   // Найти кнопку настройки качества видео
   const settingsButton = document.querySelector(".ytp-settings-button");
@@ -41,9 +42,12 @@ function setQuality(quality) {
     if (qualityLabel) {
       qualityLabel.click(); // После этого попап обновляется
       let waitQualityButton = setInterval(function () {
-        const options = document.querySelectorAll(".ytp-menuitem"); // получить список опций
-        changeQuality(options, quality);
-        clearInterval(waitQualityButton);
+        // Вызываем пока список опций не отобразиться
+        const options = document.querySelectorAll(".ytp-menuitem");
+        if (!options.length) {
+          changeQuality(options, quality); // Устанавливаем выбранное качество
+          clearInterval(waitQualityButton);
+        }
       }, 500);
     }
   }

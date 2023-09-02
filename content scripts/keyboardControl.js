@@ -29,7 +29,6 @@ function keyboardControl() {
 
   async function getStatus() {
     const current = await store.get(["statusKeyboardControl"]);
-    console.log("getStatus:current ", current);
     if (current === null) return false;
     return await current.statusKeyboardControl;
   }

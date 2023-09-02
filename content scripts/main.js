@@ -1,10 +1,9 @@
 function mainFunc() {
-  console.log("main func start");
+  console.log("main func youtube speed control start");
   const yPlayer = document.querySelector(".video-stream.html5-main-video");
 
-  // Элемент-контейнер для вставки
-  const externalContainer = document.getElementById("limited-state");
-  const innerContainer = document.querySelector(".ytp-chapter-container"); // Внутренний контейнер для вставки
+  const externalContainer = document.getElementById("limited-state"); // Внешний элемент-контейнер для вставки
+  const innerContainer = document.querySelector(".ytp-chapter-container"); // Внутренний элемент-контейнер для вставки
 
   // Создание элементов rangeInput
   const [externaInputRangeContainer, externalInputRange] =
@@ -58,6 +57,15 @@ function mainFunc() {
           }, 5000);
         }
       });
+    store
+      .get(["pauseOnMouseLeave"])
+      .then((data) => {
+        return data.pauseOnMouseLeave;
+      })
+      .then((status) => {
+        const action = status ? "add" : "remove";
+        setPauseOnMouseLeave(yPlayer, action);
+      });
   })();
 
   // Обработчик событий кликов //
@@ -68,6 +76,7 @@ function mainFunc() {
     })
   );
 
+  // Функция которая запускаеться при изменениях в local store
   function handlerChangeStore(changes) {
     console.log("changes", changes);
     for (let key in changes) {
@@ -93,6 +102,13 @@ function mainFunc() {
           console.log(
             "statusKeyboardControl ",
             changes.statusKeyboardControl.newValue
+          );
+          break;
+        case "pauseOnMouseLeave":
+          console.log("pauseOnMouseLeave", changes.pauseOnMouseLeave.newValue);
+          setPauseOnMouseLeave(
+            yPlayer,
+            changes.pauseOnMouseLeave.newValue ? "add" : "remove"
           );
           break;
         default:
